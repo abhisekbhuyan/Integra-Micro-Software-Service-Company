@@ -1,0 +1,42 @@
+<configuration>
+	<property name="LOGS" value="./logs" />
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>
+				%d{dd-MM-yyyy HH:mm:ss.SSS} %magenta([%thread]) %highlight(%-5level)
+				%logger.%M\(%line\) - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="SAVE-TO-FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOGS}/springbootapplication.log</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOGS}/springbootapplication-%d{yyyy-MM-dd_HH}.%i.log
+			</fileNamePattern>
+			<maxFileSize>10MB</maxFileSize>
+		</rollingPolicy>
+		<encoder>
+			<pattern>[%d] : %-4relative [%thread] %-5level %logger{35} - [%F:%L]
+				- %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="SAVE-TO-FILE" />
+	</root>
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="SAVE-TO-FILE" />
+	</root>
+	<logger name="com.integra" level="ALL" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="SAVE-TO-FILE" />
+	</logger>
+</configuration>
